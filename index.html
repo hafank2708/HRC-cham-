@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CHẠM – Nền tảng thực hành giao tiếp liên văn hóa | HRC · ULIS</title>
+<meta name="description" content="CHẠM giúp sinh viên chuyển hóa kiến thức ngoại ngữ thành năng lực giao tiếp thực tiễn và giao tiếp liên văn hóa. Do câu lạc bộ HRC phát triển, Trường Đại học Ngoại ngữ – ĐHQGHN.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,500;0,6..72,600;1,6..72,500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#141a3d;      /* chàm */
+  --ink-2:#1f2a63;
+  --lapis:#2f4bd8;    /* xanh lam */
+  --saffron:#f6b21b;  /* nghệ */
+  --jade:#12a58a;     /* ngọc */
+  --rose:#e2456e;     /* hồng sen */
+  --coral:#f26a3d;    /* san hô */
+  --paper:#f4f6fc;
+  --text:#1b2147;
+  --muted:#5a6082;
+  --line:#dde2f3;
+  --serif:"Newsreader",Georgia,"Times New Roman",serif;
+  --sans:"Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);color:var(--text);background:var(--paper);line-height:1.65;font-size:17px;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:3px solid var(--saffron);outline-offset:3px;border-radius:6px}
+.wrap{width:min(1160px,92%);margin-inline:auto}
+h1,h2,h3{font-family:var(--serif);font-weight:600;line-height:1.12;letter-spacing:-.01em}
+h2{font-size:clamp(2rem,4vw,3rem)}
+h3{font-size:1.4rem}
+.lead{color:var(--muted);max-width:60ch}
+
+/* Dải hoa văn dệt đa sắc */
+.weave{height:10px;background:
+  repeating-linear-gradient(90deg,var(--lapis) 0 40px,var(--saffron) 40px 80px,var(--rose) 80px 120px,var(--jade) 120px 160px,var(--coral) 160px 200px);
+  -webkit-mask:repeating-linear-gradient(90deg,#000 0 18px,transparent 18px 22px);mask:repeating-linear-gradient(90deg,#000 0 18px,transparent 18px 22px)}
+
+/* Nút */
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.9rem 1.5rem;border-radius:999px;font-weight:600;font-size:1rem;border:0;cursor:pointer;font-family:inherit;transition:transform .2s,box-shadow .2s}
+.btn:hover{transform:translateY(-2px)}
+.btn-primary{background:var(--saffron);color:var(--ink);box-shadow:0 8px 24px -8px rgba(246,178,27,.7)}
+.btn-ghost{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.35);backdrop-filter:blur(8px)}
+
+/* Kính + vệt sáng lướt qua */
+.glass{position:relative;overflow:hidden;background:linear-gradient(135deg,rgba(255,255,255,.2),rgba(255,255,255,.07));border:1px solid rgba(255,255,255,.3);backdrop-filter:blur(18px) saturate(140%);-webkit-backdrop-filter:blur(18px) saturate(140%);border-radius:24px;box-shadow:0 20px 50px -20px rgba(5,8,40,.6)}
+.glass::after{content:"";position:absolute;inset:-20% auto -20% -60%;width:40%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.45),transparent);transform:skewX(-18deg);animation:sheen 7s ease-in-out infinite;pointer-events:none}
+@keyframes sheen{0%,55%{left:-60%}100%{left:130%}}
+
+/* Header */
+header{position:fixed;inset:0 0 auto 0;z-index:50;transition:background .3s,box-shadow .3s}
+header.solid{background:rgba(20,26,61,.82);backdrop-filter:blur(14px);box-shadow:0 6px 24px -12px rgba(0,0,0,.5)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:72px}
+.logo{display:flex;align-items:center;gap:.6rem;color:#fff;font-family:var(--serif);font-size:1.6rem;font-weight:600}
+.logo i{width:34px;height:34px;border-radius:50%;background:conic-gradient(var(--saffron),var(--rose),var(--lapis),var(--jade),var(--saffron));display:grid;place-items:center}
+.logo i::after{content:"";width:14px;height:14px;border-radius:50%;background:var(--ink)}
+.menu{display:flex;gap:1.8rem;color:rgba(255,255,255,.85);font-size:.95rem;font-weight:500}
+.menu a:hover{color:var(--saffron)}
+.nav .btn{padding:.6rem 1.2rem;font-size:.9rem}
+@media(max-width:820px){.menu{display:none}}
+
+/* Hero */
+.hero{position:relative;overflow:hidden;color:#fff;padding:150px 0 110px;background:radial-gradient(1200px 600px at 80% -10%,var(--ink-2),var(--ink))}
+.orb{position:absolute;border-radius:50%;filter:blur(70px);opacity:.55;animation:drift 18s ease-in-out infinite alternate}
+.orb.a{width:380px;height:380px;background:var(--lapis);left:-80px;top:80px}
+.orb.b{width:300px;height:300px;background:var(--rose);right:6%;top:40px;animation-delay:-6s}
+.orb.c{width:320px;height:320px;background:var(--jade);right:25%;bottom:-120px;animation-delay:-3s}
+.orb.d{width:200px;height:200px;background:var(--saffron);left:38%;top:-60px;opacity:.35;animation-delay:-9s}
+@keyframes drift{to{transform:translate(50px,40px) scale(1.15)}}
+.hero-grid{position:relative;display:grid;grid-template-columns:1.05fr .95fr;gap:3.5rem;align-items:center}
+.org{display:inline-block;padding:.35rem .9rem;border-radius:999px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);font-size:.85rem;margin-bottom:1.4rem}
+.hero h1{font-size:clamp(2.6rem,6vw,4.6rem);margin-bottom:1.2rem}
+.hero h1 em{font-style:italic;font-weight:500;color:var(--saffron)}
+.hero p.lead{color:rgba(255,255,255,.8);font-size:1.15rem;margin-bottom:2rem}
+.cta-row{display:flex;gap:1rem;flex-wrap:wrap}
+.stats{display:flex;gap:2rem;margin-top:2.6rem;flex-wrap:wrap}
+.stats div{font-size:.88rem;color:rgba(255,255,255,.7)}
+.stats b{display:block;font-family:var(--serif);font-size:1.7rem;color:#fff;font-weight:600}
+.hero-in>*{animation:rise .9s cubic-bezier(.2,.7,.2,1) both}
+.hero-in>*:nth-child(2){animation-delay:.1s}.hero-in>*:nth-child(3){animation-delay:.2s}.hero-in>*:nth-child(4){animation-delay:.3s}.hero-in>*:nth-child(5){animation-delay:.4s}
+@keyframes rise{from{opacity:0;transform:translateY(24px)}}
+
+/* Demo tình huống */
+.demo{padding:1.6rem}
+.demo-head{display:flex;justify-content:space-between;align-items:center;font-size:.85rem;color:rgba(255,255,255,.75);margin-bottom:1rem}
+.chip{padding:.2rem .7rem;border-radius:999px;background:rgba(246,178,27,.2);color:var(--saffron);font-weight:600}
+.bubble{background:#fff;color:var(--ink);padding:.9rem 1.1rem;border-radius:18px 18px 18px 4px;margin-bottom:.3rem;max-width:92%;font-weight:500}
+.who{font-size:.8rem;color:rgba(255,255,255,.65);margin-bottom:1rem}
+.scene{font-size:.92rem;color:rgba(255,255,255,.85);margin-bottom:1rem}
+.opts{display:grid;gap:.6rem}
+.opt{text-align:left;font:inherit;font-size:.95rem;color:#fff;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.28);padding:.75rem 1rem;border-radius:14px;cursor:pointer;transition:background .2s,transform .2s}
+.opt:hover:not(:disabled){background:rgba(255,255,255,.2);transform:translateX(4px)}
+.opt.good{background:rgba(18,165,138,.45);border-color:var(--jade)}
+.opt.ok{background:rgba(246,178,27,.35);border-color:var(--saffron)}
+.opt.bad{background:rgba(226,69,110,.4);border-color:var(--rose)}
+.fb{margin-top:1rem;padding:.9rem 1rem;border-radius:14px;background:rgba(10,14,50,.45);font-size:.92rem;min-height:3.4rem;color:rgba(255,255,255,.9)}
+.fb b{color:var(--saffron)}
+.next{margin-top:.8rem;background:none;border:0;color:var(--saffron);font:inherit;font-weight:600;cursor:pointer;padding:.2rem 0}
+@media(max-width:900px){.hero-grid{grid-template-columns:1fr}.hero{padding-top:120px}}
+
+/* Section chung */
+section{padding:96px 0}
+.head{margin-bottom:3rem}
+.head h2{margin-bottom:.8rem;max-width:20ch}
+.tag{display:inline-block;font-size:.88rem;font-weight:600;color:var(--lapis);margin-bottom:.8rem;padding-left:.9rem;border-left:4px solid var(--saffron)}
+
+/* Lợi ích */
+.benefits{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem}
+.ben{background:#fff;border:1px solid var(--line);border-radius:20px;padding:2rem;position:relative;overflow:hidden}
+.ben::before{content:"";position:absolute;left:0;top:0;right:0;height:6px;background:var(--c)}
+.ben h3{margin:.6rem 0 .6rem}
+.ben p{color:var(--muted);font-size:.98rem}
+.ben ul{list-style:none;margin-top:1rem;display:grid;gap:.5rem;font-size:.95rem}
+.ben li{padding-left:1.4rem;position:relative}
+.ben li::before{content:"";position:absolute;left:0;top:.55em;width:9px;height:9px;border-radius:2px;background:var(--c);transform:rotate(45deg)}
+.ben:nth-child(1){--c:var(--lapis)}.ben:nth-child(2){--c:var(--rose)}.ben:nth-child(3){--c:var(--jade)}
+@media(max-width:900px){.benefits{grid-template-columns:1fr}}
+
+/* Tính năng */
+.features{background:var(--ink);color:#fff;position:relative;overflow:hidden}
+.features .tag{color:var(--saffron)}
+.features .lead{color:rgba(255,255,255,.75)}
+.fgrid{display:grid;grid-template-columns:repeat(6,1fr);gap:1.2rem;position:relative}
+.feat{padding:1.8rem;grid-column:span 2}
+.feat.wide{grid-column:span 3}
+.feat h3{font-size:1.3rem;margin:.9rem 0 .5rem}
+.feat p{font-size:.95rem;color:rgba(255,255,255,.78)}
+.ico{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;font-size:1.4rem;background:var(--c)}
+.feat:nth-child(1){--c:var(--lapis)}.feat:nth-child(2){--c:var(--rose)}.feat:nth-child(3){--c:var(--jade)}.feat:nth-child(4){--c:var(--coral)}.feat:nth-child(5){--c:var(--saffron)}
+.feat:nth-child(5) .ico{color:var(--ink)}
+@media(max-width:900px){.fgrid{grid-template-columns:1fr}.feat,.feat.wide{grid-column:auto}}
+
+/* CTA */
+.cta{padding:96px 0}
+.cta-box{position:relative;overflow:hidden;border-radius:32px;padding:4rem 2.5rem;text-align:center;color:#fff;background:linear-gradient(120deg,var(--lapis),#6a3fd0 50%,var(--rose))}
+.cta-box h2{max-width:18ch;margin:0 auto 1rem}
+.cta-box p{max-width:52ch;margin:0 auto 2rem;color:rgba(255,255,255,.88)}
+form{display:flex;gap:.7rem;max-width:520px;margin:0 auto;padding:.5rem;border-radius:999px}
+form input{flex:1;min-width:0;border:0;background:transparent;color:#fff;font:inherit;padding:.6rem 1.1rem}
+form input::placeholder{color:rgba(255,255,255,.7)}
+form input:focus{outline:none}
+.msg{margin-top:1rem;min-height:1.5rem;font-weight:500}
+@media(max-width:560px){form{flex-direction:column;border-radius:24px}}
+
+/* FAQ */
+.faq-list{max-width:820px;display:grid;gap:.8rem}
+details{background:#fff;border:1px solid var(--line);border-radius:16px;padding:0 1.4rem;transition:border-color .2s}
+details[open]{border-color:var(--lapis)}
+summary{list-style:none;cursor:pointer;padding:1.2rem 0;font-weight:600;display:flex;justify-content:space-between;gap:1rem;align-items:center}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-size:1.5rem;color:var(--lapis);transition:transform .25s}
+details[open] summary::after{transform:rotate(45deg)}
+details p{padding-bottom:1.3rem;color:var(--muted);animation:open .3s ease}
+@keyframes open{from{opacity:0;transform:translateY(-6px)}}
+
+footer{background:var(--ink);color:rgba(255,255,255,.75);padding:3rem 0 2rem;font-size:.93rem}
+.foot{display:flex;justify-content:space-between;gap:2rem;flex-wrap:wrap;margin-bottom:1.5rem}
+footer .logo{margin-bottom:.6rem}
+footer small{display:block;border-top:1px solid rgba(255,255,255,.15);padding-top:1.2rem}
+
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+/* ===== Bảng màu pastel ===== */
+:root{--ink:#34316b;--ink-2:#4a4690;--lapis:#9db4ff;--saffron:#ffd873;--jade:#93dcc4;--rose:#ffa7c4;--coral:#ffb79a;--paper:#fbf9ff;--muted:#625f8a;--line:#e6e0f7;--deep:#5b63c9}
+body{background:var(--paper)}
+.logo,.menu{color:var(--ink)}
+.menu a:hover{color:var(--deep)}
+header.solid{background:rgba(251,249,255,.85);box-shadow:0 6px 24px -14px rgba(52,49,107,.35)}
+.mark{width:38px;height:38px;border-radius:10px;object-fit:cover;box-shadow:0 4px 12px -4px rgba(52,49,107,.45)}
+.glass{background:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.95);box-shadow:0 24px 50px -28px rgba(91,80,170,.4)}
+.glass::after{background:linear-gradient(100deg,transparent,rgba(255,255,255,.95),transparent)}
+.hero{color:var(--ink);background:linear-gradient(135deg,#e5deff,#ffe1ec 45%,#ffeadb 72%,#daf1ff)}
+.hero p.lead{color:var(--muted)}
+.hero h1 em{color:#7a6be0}
+.org{background:rgba(255,255,255,.65);border-color:rgba(255,255,255,.95)}
+.stats div{color:var(--muted)}.stats b{color:var(--ink)}
+.btn-ghost{background:rgba(255,255,255,.6);color:var(--ink);border-color:rgba(52,49,107,.2)}
+.btn-primary{box-shadow:0 8px 22px -10px rgba(214,160,20,.7)}
+.demo-head,.who{color:var(--muted)}.scene{color:var(--ink)}
+.chip{background:#fff;color:#6b5bd6}
+.bubble{box-shadow:0 6px 18px -10px rgba(52,49,107,.4)}
+.opt{color:var(--ink);background:rgba(255,255,255,.75);border-color:rgba(52,49,107,.14)}
+.opt:hover:not(:disabled){background:#fff}
+.opt.good{background:#c9f1e3;border-color:var(--jade)}.opt.ok{background:#fff0bf;border-color:var(--saffron)}.opt.bad{background:#ffd9e5;border-color:var(--rose)}
+.fb{background:rgba(255,255,255,.75);color:var(--ink)}.fb b{color:var(--deep)}
+.next{color:var(--deep)}
+.filters{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:1rem}
+.fchip{font:inherit;font-size:.85rem;font-weight:600;padding:.3rem .85rem;border-radius:999px;border:1px solid rgba(52,49,107,.18);background:rgba(255,255,255,.6);color:var(--ink);cursor:pointer}
+.fchip[aria-pressed=true]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.demo-head{margin-bottom:.8rem}
+.prog{margin-top:1rem;padding-top:1rem;border-top:1px solid rgba(52,49,107,.15);font-size:.85rem;color:var(--muted)}
+.pr{display:grid;grid-template-columns:80px 1fr 36px;gap:.6rem;align-items:center;margin-bottom:.35rem}
+.pr i{height:8px;border-radius:99px;background:rgba(52,49,107,.1);overflow:hidden}
+.pr u{display:block;height:100%;background:linear-gradient(90deg,var(--jade),var(--lapis));border-radius:99px;transition:width .5s}
+.pr em{font-style:normal;text-align:right}
+.prog p{margin-top:.5rem}
+.tag{color:var(--deep)}
+.ben{box-shadow:0 18px 40px -30px rgba(91,80,170,.5)}
+.goals{background:linear-gradient(180deg,var(--paper),#f1ecff)}
+.ggrid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.2rem}
+.goal{padding:1.8rem 2rem;border-radius:22px;background:var(--c);color:var(--ink)}
+.goal h3{margin-bottom:.5rem}.goal p{font-size:.98rem;color:#46427a}
+.goal:nth-child(1){--c:#dfe6ff}.goal:nth-child(2){--c:#ffe3ec}.goal:nth-child(3){--c:#d9f5ea}.goal:nth-child(4){--c:#fff0c9}
+@media(max-width:760px){.ggrid{grid-template-columns:1fr}}
+.features{background:linear-gradient(135deg,#ece6ff,#e2f4ff);color:var(--ink)}
+.features .lead{color:var(--muted)}.features .tag{color:var(--deep)}
+.feat p{color:var(--muted)}.ico{color:var(--ink)}
+.feat,.feat.wide{grid-column:span 2}
+.feat:nth-child(6){--c:var(--lapis)}
+.cta-box{color:var(--ink);background:linear-gradient(120deg,#d9d2ff,#ffd9e6 55%,#ffe6d2)}
+.cta-box p{color:#46427a}
+form input{color:var(--ink)}form input::placeholder{color:var(--muted)}
+footer{background:#ece6ff;color:var(--muted)}
+footer small{border-top-color:rgba(52,49,107,.15)}
+
+.feat ul{list-style:none;margin-top:1rem;display:grid;gap:.45rem;font-size:.93rem;color:var(--ink)}
+.feat li{padding-left:1.3rem;position:relative}
+.feat li::before{content:"";position:absolute;left:0;top:.55em;width:8px;height:8px;border-radius:2px;background:var(--c);transform:rotate(45deg)}
+.lens{background:linear-gradient(135deg,#fff0e6,#e8f8f1 55%,#e9efff)}
+.lens-box{padding:2rem}
+.lscene{margin-bottom:1.2rem;font-size:1.05rem}
+.tabs{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.4rem}
+.tab{font:inherit;font-weight:600;padding:.55rem 1.2rem;border-radius:999px;border:1px solid rgba(52,49,107,.18);background:rgba(255,255,255,.7);color:var(--ink);cursor:pointer;transition:background .2s}
+.tab[aria-selected=true]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.lgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.lc{background:rgba(255,255,255,.8);border-radius:18px;padding:1.2rem 1.3rem;border-top:5px solid var(--c);animation:open .35s ease}
+.lc h3{font-family:var(--sans);font-size:.95rem;font-weight:700;color:var(--deep);margin-bottom:.4rem}
+.lc p{font-size:.97rem}
+.lc:nth-child(1){--c:var(--lapis)}.lc:nth-child(2){--c:var(--rose)}.lc:nth-child(3){--c:var(--jade)}
+.lnote{margin-top:1.2rem;font-size:.88rem;color:var(--muted)}
+@media(max-width:820px){.lgrid{grid-template-columns:1fr}}
+.pilot{background:var(--paper)}
+.pgrid{display:grid;grid-template-columns:1fr 1fr 1.6fr;gap:1.2rem}
+.pc{padding:1.6rem 1.8rem;border-radius:22px;background:var(--c);color:var(--ink)}
+.pc h3{font-size:1.15rem;margin-bottom:.4rem}.pc p{font-size:.97rem;color:#46427a}
+.pc:nth-child(1){--c:#dfe6ff}.pc:nth-child(2){--c:#d9f5ea}.pc:nth-child(3){--c:#ffe3ec}
+@media(max-width:900px){.pgrid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<header id="top">
+  <div class="wrap nav">
+    <a class="logo" href="#top" aria-label="CHẠM – về đầu trang"><img class="mark" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAIAAABt+uBvAAAbFklEQVR42tV8a5Adx3XeOad75r73vVg8doFdYrl4k6BCRiYtipZoJpLNsinbseWULUep+Jk45SolTqrsSjmJrcqf/HDkcioVW0nZVsp2mbEkRCIphqFIkYooSqRAigCI52KxwD6wr7v3PdN9Tn7MYvZiZu7s3QWgqswP4O7cud09p09/5zuPbsw6BLdfAiC3PpNAwoUo4bNtD2ze3WwS2/+4vZONpjY/CwJgvK/wlhCGjW521vYblo2P1PY7KxK2RIAiAgAIvPEp6DZ8G9kcdzAuRKLoSESShhcdM4u0P5n09p2vzYEkddB+GzH8jNB+D8O+MNYvtrXA7QJCZOa2UUh7XyIit7+RiGiMzQO0jZmIOr0jpQhCthJR+M7J8knrN9pS+6+SWqMOXXR56bTZ6/h2uJV+SJct4J2NPmVg0qY4d9RmMFftSnvng95SQFu+XqIGRZoNnm//VeLn9l/FB9ZpqMF9EdF3fRrvRYOd3vnOO0LE9OnUoQbtbNrvooC6X5gRlU/Uu7C18Ga6KqVh0D3VoHsq922NPPJwuxqmDFLHoSdxcrqZ/8RuuhdQ+/ynD6B7G9eNQAMBhaATGba+19CzM/VMb6qbNu/cFt9lAXXqr3sBdf9KnZ6UJIqbqMLdg4C+WwDUqcudCegu6l3k2y6XfNiU7qbR7RrXnb3qtnQwUUHasSl0KeKAJSIb3hJzfLQBHm0KaAfzcye2464IqBOl3C7V7Ebu/18K6B5dgfkO1GdzuTiOE2Hu3SyQOM2/E06cQizw1tW+arpczhHLHdegODUJumi3+npLenov/InIb7sU97ZoRAjJ6SYvwhLDP5NBOi6gYCXH4ybhxIazeluMZjtOw70QUJdEKYLHcf1CRB1X0YjlikstvkC2y3Q7ddqpwR3Lol1B4u+f6GdEkEh301OEQcRjI50k2KU9CpUx0e8JQaF7FWsHl3ZPIrIIOkFVe4O605hS1l2KTm1XQJ0oZZyb3BV83JJSJZj5nQko8YEtmWTi/cRf7QykpLtoeuIyjPcYtKbj/LLT4kqUYDj0+CTHjW5EFunWvROUdIpaBNiXCLSdlDcx4hHpSCfCQTdqnwIrncxcumKmuzjh8ykCiiyWuHQ6WfQ4YIeaoeNUvRsBpTO69n/bA3pxDtE+jYnxwLhNjKhJJ1crbDzFm29vqt1ytcuXuoe3dhF0qVNxktVJEbaFvp24W/eNJ1rhyBraWGIRiI3Mc6cgRhjJTmGo7Vw2EXQjX3XSi7jaBwrSidSEehEymhBxImoV7zpslpmjIN29L7olxKasu51R3m2NMO49bInWKQED3f0aSV9uWz52FwXUwcYDEQKCtYywmfJvt7PB/5EKgE6uRnSJJRqXFAGl2x0iSrQj8TEFap+OfalhHSXChCJiiV3LvqORWUDQCrOwYbSGEVTOVdkMNnwHqIqsRKLeRrg229vXkbRRl6Y3jpfpooxMjlIqxIL4+DoJKJlSWo+QmBFR+1i3iLaFQGSMn9V6oNR7cFfvocnBicncyRP7rs5V/vVnX6y1rAMOEsfXV2QMUV+sezPfPfFPNyt4+7XdcB8AGBIG2zJCqHOYH+rVAwPq8OTo1PjQsamBibHiYH+mmMtr0tDyl6++Lb7VpBWiwNZARkQ7J4pdxsATPZ1kNdn4OmiwvaZlAzUQg0+b/TJLT7E0uqtnYl/u+NTu+8dLE6Mje4ZK2ayvXIviei32WnatslQpLzara9dvzresRQFSwmrrtEdCwKwT5e2Uhwywhpk7GeZIWq5drEQKgAEsIgIw2CwRIlgUFkDDPmlgjeyLaxWDGM1EQOhYTwgAhHb1Zf7j7z11fHJ3IYOuFl+ADdtmfW252Wo2W/XyennJqzd8v2WsrxysVqtofaYMaAHZ4ArW2oj/0e4JdBuTTkHcdHcpCGIopQJmcft8ACKxIIgAIGENUVnRFtCiJ4LiUU6cgVym1mxVPT/DLgIyWschi9hqwC//zNFHj436puHX/dXKeq3RalRXq+VFafnWZ098X2yjQfPL3vUl79pC89xMExzSpJlvM2Xx1ZDgrHYZ044HJbuB8xSAQyABsZabkhPD+Ywa6ikMldypyeH9+wqHDvbft3/wwpXyF5791vfenQUpgaM9aLJHj54Y+fEnJ/z66tWZmdWlBa+xrsVncCoNu1Lzr9/0Zm60Zue968veUsWv2WzLw1xGO1mHUImx7TVsneKtAID9/f0pXljcVEWai7fezkcRgVCxWBaj0BUAAEFBy8JCVlgRkUhPQY0Mlcb35o8f2jO+t3Tf/sGB4WxP3s05yjJabrourazb//nihc9/4a3Fqm+UV+Ts537nRx4+2TN97v211cVKQ67Nmtll/9L1ysxNu1Ll9UrTMgEpxyEiJKURBUCsUaIEQVCiTnwECjY0KCIIImLmMKPWyXVWSrX7CnHQuQWwLIykyFGKwPWthwgOs+ua3SN9+3aVjt+/d3J8YGK0OLYn15NzldKExMK+tAi55Vv2hZBaoko5/elPHJu5tPzfXjirm84zPzH2gWPFq2fPTc8vfOvt2uunK1duVpq+g0haO0opnSu4iIiolGZrAUQpbawldcsI4Kb/kUgjksMdIVJ0cqA6AXm7Y9X2LSoEscAGhRgIfeMfm9r76z93/Pihvv6hXkWOI2IFfMtWyFoL2Gw1a+RTrVpu1sq1Sq1YKA7u3ovFgSzzjz6++69fOj863P+Pnj68eOPs6TPlP3vxxvcvekoXVLZYcBUppW7N8S1kYSQEQO4i6ZyWOAwsUejOdaLL8VBGO3hHQ4uAJMpxZdee/iuXF5RbdFxneubqV59fy8uBg1PjvYPjVjy2vm9afr1erVTqtcbi0s2F1dq1G/Wr1xuLa2Z8xP3k0w8efjDjUWaox4wP4Cf/wcH+knz1f6/+8d+cn1my+XzJcR0gx7bx4NChDd4LEY0xOygv0HG2GmpdBGVusUwkIAHfsibQiDb0GOKaRUjWsNb+b/3So//5L149e95kcvLTzzw0fWnl3/6Xc596Zu1DR1cAnOW19cXl5WvLjZm5xqWZ+nJZL5Wx4lUNuizu986Wjx9enDoxVS0vfuPVsxMTxY/90L7vnXn7T09dn17Vxd6SIu2zEDqENjH0FckIRCY1sTIoikFb5h7ahCUGLbLLDOQwSpr5FwDUZNiO9ZnP/PKTn/m9ry7UWmMF9Zu/89E/+ss3//yLl949X15v1Kev+qvlTKWBnrUGhRxwHQcz+SxmrYgBVeobciR74b3vvnx69Vd/6UnbXPnSc9feny3ni4MOuVZYEYAYTqrRDKQTDx5GUiYRmha+8rZLtUQEHAILRw/2ZzWwTVjYdOsKCtbFQLNS/vDJ3b/6qRNKWtXV9SLCP/+FRw/cP/Lfv1J+/pvq3Jy7apWfdzjn5IslVzsWxRrlNxtc9x7/4KEPP3Zifu6dF169Mnlk/6PH9r/5zoWX36o5bi6jXBDaJOH34KKu5QKEChGQsFUzYwP6556eUn5gK1PYo1hmYBTTQmn+9FNTTzywu8p+Daxdb/a7ns6BW1AqowUcMMzGNhqm6TOiP9TvPPZ3x37rnzzy7377IzmpfOvtmfcWvX/89IPNWvnbb5XnG03tFJSyAhbuaiVk5NKdSocDYGuLvaO14LhoDIqFZ548emCYasYnrbXWARCGnD0MdzCiSywgvlY+C3uV/l4tAg7rGlVIUClAL+NJWZiHSvmR0aGjUwOT4/3HxgcPjJYGitlS0W21muffOf/cqytPPvbg6PjA/LkrF2Y9R+e0QiMIBAi3eTNbko/I4krPO+nE3ydFM8WIR9Yxhg4fKH7iJyfOfv+GUk2GQjyGEnqdSKiVY9i3DGzFsmWWW/tECECY8djh3AdOjh8c333sQHZkqKevmHe1YiTPNFGpRr01f/69Z1+9jE7+Jz900Kuadb+8XAOtNBEZw1qr7pNl6aUdyRqUHmdob8LRGQAEqv/sT3xgbNA93aoBk5AIS0C6okgvwoItT4wFBC23mFkIpSxQUPi7v/5DDx3eK+SB5D3LSNyyHpCwIfCaVy+//+xL3//zU8s//pHBtcXz1gwpzDhZQsCQlOwgm5iS8EjA0wjHCxdXBIMUabb84KHev//Efm6QGE9JFkQZyywiwghg2VqwdWPK9VbLoyw6xycyP/vxYwfvG3ecTGRMCMgoa42rRqSOOeG6kor1WyRZY7Xr6NrK7FeeP/f5FxYIc9/+9vp33r+2snQlWxy4b7wkxGi0VlrQ3LI7RKKIhJGZBRhFlIADDCQIohAdFgAlQh6L6VK/dCS334nyASBz0zd8dHRoKJ9nEKvq7DRENIBmcVteUxEXMrlSsXjkwPD944UHHxg4ON4/0t9XzIMYtszt7i4iokJpkdt0avMzC/Vqs1peq3gZhWN7+vtGJsUpluv2lXdXm6b0+PEhz7ROvb40OVQc2Nt84pGpr70+72kvYzJgNTkYZCdJxIIl5SBqYquU9a3nOei1DHuSd3QuQw3RCBrED9Z5p4zOJlG01sa92EjyDACIUETYMqIyfiuTyVjsqa3liGhoQA8PZ49P3X9scuT4ocHx0WypAJlMFgwIk0EQZmvdpIWMoP3vXZx+6+z581cal+ea5YotOfrxh4tPP1k7MnVyZGzioZOzb1683DegP/bDR//Vf/hfb7zX2L13/akPTX7jjfv++pWrQz1IvDHBWqNFg5BxgOq20fRbaDI9ub59JT15pO+Bo8PHpoYWK43f/9zXjMkKC1J3ddLWWq21tTYenL49OhtsvEIWy1J3nOHjk+P/8lecAxPFI5N79w6VCjlAZK9pFTki4LWEBdn3vfp6w9Qz+Z5CoTe6vBHqTH/8V1er1SJlHAVZyunrVXPhy2uuujE02DOy79inP/nB19+Z/8ar00+d3PPhD47/1etXpibyH9o9/Aef+ZiDL3/x1fMWOOtkjGVjjc9KfNPfR0d29z94/77Dh/oPT/ZM7R8e6CtoLQq8L33tPWFfWCkShu4E1J5UEJEwld5u7G8tOgIwQfKAUe6bHP61o3sd1mytsablIYBq+R7bJjbq62sr5fLyeqW2uFS7vm4fPzZ6+OHHRAiA2QIAB40rQCc3kkWftFWiGHzlYMOW/vaVuYeP9hX7D47tK/7Tn3/4M3/w2l+cevs3Pv3It8/Offkbi7tGLhx5oPTvf/cjP/bmkVMvn7l2vWyM6evNPjQ1dvTQ4MRYaWyktyefQZSW36w3qssL67Vyzaus3py+AQZ9FlJbGLLQzdTbiSsH8S1EJBYPgMQHnw37XrNeqdUqjVqtsrJaW10/v1a+eqM5fc2bnTc3y9KU6v2/vXsSTHyLIqHyjVUaFWWsZQAEkYwr02X+269fPTA6nD9y5KnHpv7ej1w49fz7T5xZ/PmnjvzJs9/9O4cKuczbE1MPf/SH9zz1oTHTAmOt4yI5DNY3VWjW69eWrtWr5XplzavVjNgWeywyX2v6toGUE+Atrd7Gyt3B3itBJsLq2mq1vFZZX1ldq6+s1OYXKpfn6hcX7fSiqa6Kb8EnyhTySlsXnKLTjzaasANAAQncSGZGBOaNKKebKX3t7eXHTswM79ld7B/6jU+e/M67K//jq+///m/+6KGpuS++vDC2L6PgvdGD96MiFPR9r9y09Vq5Xl+q12vs+2x8z9OVqr9Y4dmF1vRcc2HZTN9o+KboZi2AJHoRgdd2W8CsmzzspusJAAiWbaNRe/f0e99559r5G82Z+dbCCq7WEFRGQEAgWyg6wBkUQEF2AZoeVIV8EBEBFmFAsJ5IC9EJKXiYa2TEHk1rrcLfvHb12OTo5InehyYP/OLPHP7sH71+6v+88ws/dvjf/OE3v/7Wyicep9pbTUCD6Fkwno+eMdUGl6tqfslcnF2fvenNLXkrNd/zjQFQSrmOmytkFJK11rJNUYIQanQKE4/cZNgIMxIiKX39pve5Z5c91EpRxnXdfJDh1AAObigwCYBiEgAkV4uLJAgICK1mZXrmyuXrNSLdnlQI/UOfrZspnj6z8PU3Lo/sy2T2Hv2HHz/xyv+d+eI3rz16fN+Tj+59/tXLJw/2j+1eL1e81YqdnTM3FpvTi6255dZi2WtZhUgC4DiadCbr5omCTcgozL5YCWZSoFOqclNAO3DzAhabz+ezuZzrOCqIJ7ANvItA/xARBASDBK+ACClgBmYisUs3Lv3lc5fPz9isYsCor8DAAKwxC87QC6/PnHhg8AOZwYLQL3587L33V7/wpdNHHthVNfrzp2ZLxczMfL1cbdVbVtBRuqSItKs1IGlXJGBeZIwJvMXbPC/AgAptsdtnR/s/JZh2ERZmm6SDIrJRQXCL1HteY2V5pVapNwfNc69cZeh/4qO5L5+adbLx1DsSKrFNq+HcHLz42rXy2vrcQnV23o7kzfVaxp5dOzE5eWl28excRUFW60yhCICWydPkghQDb9k3PrMQQZh0Six328Z2qMR8zi17DyABhoFSmkghAgiLMJFKrAxkYWRkQXBYEZUXl988ff7MlaWyye0b2vUvfu2JPzv1mg8mr7K+8VERiVhfSCGDZeuINJ0sgep96a31dy/XnVypb7Dnp545tn+kMLrHr/vZz/6nF+vzWpCCkDMIkiFRaMUXEWKSIE4WQttmlFoSsz3JAoqnzSIxt1DqLEE8H6xlxSIgSpEFjBfTtbUgAqLEUV7t8vTaV15aW670DTYKv/Kpj+7rMa1Vaxlb7FthEhJuKnJdyLiu47h219CufSMD+/fk9+8u7B3M9JfAA29pqXp95sp331w8N1NdXsIM9Vj0mTlYLIwmNN+WzYZJ2VB2iccP4+nihC2Z8RB9x7JIQKUosMSIyJaNNZIUbdhccSTaQfKpUvVeO7P8zoxHuvD4BweGCwun31sqr5ddNMDZguMUc24+Wzywr3d0JDMx1rdvl9vbk1XSLK/WZm/cfOn8ytnLCwsL5mbZX2kq0q4So1C7TisIk2/pzSeWlEUwIdkXS7TridiuteN5Yo3x/VZGRFCC7HHbJNyKQ2/eUdaCUOPNi5Xn3rjpZXPKa5w/M/e5hfLiWnmpph45svvwweG9uzMHxnqHS3mt/HqzcmNu9e3T5YtX1qZnGzeWa3UDXotI5UWjUm4xH9BcZYwRILntMBZIcc07lSW3u+txIehQlu1piVAbb7mygOCxOALOhenVs+9fOXrQgsuIGgQELAgSISEIoW9NLpuxxgSerWhAcV94c82z2YmhwaEi9w3kB/f2n3yktH9fsS8PfqM5d7N28cz5r1y9OT27fn1Jai3Xs2xZSDukSzpH+WwwFCUB7gkU8oVms2WsjZjqlH0F0na1CyWyyyrSQrSQPLKdLMwgi1XWGsrZ71xs/tdnL/+zn2rpGjIwiAaLlsUqII0kKkNOs2U1Qj6jChm9e6BvqDdz39jQxERu15Czq5QHv3FjdXlm9sZzb69cuLZ2Zam5tm49kxXMa92rtKWMkGEVlMQABuAHSBS8JAAA+MawMN9O9uLgsuW3Wx5WoRN9kHjrRliAia2b7XvlrfJQXo5MjSjxDSAhKaVYUIvqK6hSXg8PD46OlA5PDO0fKQz3K5XBxdX5uavX3jhTOTe7fmmutrKOtZZvSJNkXOxzs6jA+NhkAWYNrGijruG2yHG42w0AgixgWL8SCeskvnb828QdelHlKJVKiZVR7ZEzvHUMkkaNCkSITGPqIF2fBSoUCzka6M1P7h+e2Ntz/30D/T2Sy0Kj4S0vlM9fuHbu2vqV6/XFVVWuWcOi3QwQZRUprYTBAjNYDM5ZssIiDAyIBJQYV29fF2E6MPwQfzhFfdIX46ZACoVC0EfkEI9gfEGRwi0Jkqt0Pgf5kjvYm987kDs0PnLfvt4DY31Z1/O5vLi8eulC+dKl1Ytz9dmb9WorU/cICRSRdjQRYcAt23P/ssEeEjdzJX6OJzCIyBgTMpJw/GG+MLE+asu+NgWUWNnbnn1HRCSllEavcXC0/5GTuyZHS2PD+UJGLi0snnl/aXqmcWPBLq+ZBnNdBF3lOtohRCEiHQgl9EVDgxDWkNyhgEKdinOZuyCgfD4fW03JCw2AUACxhWCYIeMqa7necJTrMlmH0FWalAOEwBaANLkCwuBHvN9E5pW4uTbFErULyFqrlLLWJi6xRPluT0CJRd9xARERAAoCCRAoVEpEAA0RIRBveCQYqJygCDASkujgBcIQZVCCFEeWxK2B7XoR2UgQOZEk/c8UQ5TuiymtdaJQknAaNo+MQwGwAMFUIGBQcAhBseqGtyxIosJGgo6staHR6URz05lel9Lp5uW7FRAk7UqN86MOIkuuRdwYKEi7MW6vQYk4Rylqn+I6hP9GQuntDDCidJHI4ZYS1IkZ6/g2s3QJptyJIGhk+Wx58lUKQm/5b+LPt6tBHUOuids44422k4MwQRJEUUUkgJ7An27Xl4A9xKvTUl4svpTiL9YOWPGgaDcCSivBS1GcLWc4slhCi54o1kT47CZfniimdFcz3ep3o006XdO6FFBkkoMaSqVUYLBS1kunEESKt5ko6G5o1LYEFN0v1t5KpDQzwk1S9idFgDxYXJFqncgrJVKhxBeOw3A3BitFcOn7oKNWLG6hUgxWCg+I77WMhIHjRUqJehEPcqZw606rL+Wsl+4D8DqyqSKFRKUcAhLCc/uW0ZQ5jIdg4h52J9sfeaCT9qUjWvd4olNiRbDVYQoRXA9LSuMZjsTtaonIkqhKibibqFadeHY3Akrco64jBcSddkFB5/Ne2y1XpyqAjUD6rRxhPDQRWZ6RYGiX1WBbakT3jaQd0ZUIARGz3T0D2G7dYFw12oMY6erWfeVh95ql032fxBx0+uaGbqY0nmZJZAzpDCgdm9NPA+6eVXcUUMrJVnESmLg9M907SceILd2LRDxONAhb0qturdi2NummuCYpxw4kBoMTK0878eNOupCud+mEaNsY1A1vjgBq/KCI+M2d+aIp0YzEYH66B7eDHQt6u9JJ9Nfim3q7P6C6056/TqiUyHQ6sYeInYHtX6q9dnNLExAPXaeoybYElEh50qlQ4spKVEC4g0MNt7cKtms+t/XbLsOAEbncu20sO8Gg9CvlfNlOT6Z4EolRnh+ARLatQTtQnHvRyHZ54F3ToG68rTCBGfc5uj+3Le6Udclf4n3FtawTGN35LOo7nOedORxdupSJePyD1qAfpIDi4bFO1ipdQD+wA5R3DtLdpyK6MfDb7WtbPOsOUVJ3fxJQp9BHunVPCejEjz2EzinATmq1ZTbtDpfk/wNA8DKt76ehqgAAAABJRU5ErkJggg==" alt="Logo HRC">CHẠM</a>
+    <nav class="menu" aria-label="Điều hướng chính">
+      <a href="#muc-tieu">Mục tiêu</a><a href="#loi-ich">Lợi ích</a><a href="#tinh-nang">Cấu phần</a><a href="#goc-nhin">Góc nhìn</a><a href="#bat-dau">Bắt đầu</a><a href="#faq">Câu hỏi thường gặp</a>
+    </nav>
+    <a class="btn btn-primary" href="#bat-dau">Đăng ký sớm</a>
+  </div>
+</header>
+
+<main>
+<!-- HERO -->
+<div class="hero">
+  <span class="orb a"></span><span class="orb b"></span><span class="orb c"></span><span class="orb d"></span>
+  <div class="wrap hero-grid">
+    <div class="hero-in">
+      <span class="org">HRC · Trường Đại học Ngoại ngữ – ĐHQGHN</span>
+      <h1>Biết ngoại ngữ là một chuyện. <em>Chạm</em> được người đối diện là chuyện khác.</h1>
+      <p class="lead">CHẠM biến vốn từ vựng, ngữ pháp bạn đã có thành phản xạ giao tiếp thật, qua tình huống mô phỏng, hội thoại tương tác và phản hồi ngay tại chỗ.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#bat-dau">Thử thực hành ngay</a>
+        <a class="btn btn-ghost" href="#tinh-nang">Xem tính năng</a>
+      </div>
+      <div class="stats">
+        <div><b>10 tình huống</b>học tập · đời sống · công việc</div>
+        <div><b>Tức thì</b>phản hồi sau mỗi lựa chọn</div>
+        <div><b>Miễn phí</b>cho sinh viên và giảng viên</div>
+      </div>
+    </div>
+
+    <div class="glass demo" aria-live="polite">
+      <div class="filters" role="group" aria-label="Chọn chủ đề"><button class="fchip" data-c="all" aria-pressed="true" type="button">Tất cả</button><button class="fchip" data-c="hoc" aria-pressed="false" type="button">Học tập</button><button class="fchip" data-c="doi" aria-pressed="false" type="button">Đời sống</button><button class="fchip" data-c="viec" aria-pressed="false" type="button">Công việc</button></div><div class="demo-head"><span class="chip" id="dTag"></span><span id="dCtx"></span></div>
+      <p class="scene" id="dScene"></p>
+      <div class="bubble" id="dLine"></div>
+      <p class="who" id="dWho"></p>
+      <div class="opts" id="dOpts"></div>
+      <div class="fb" id="dFb">Chọn cách đáp lại phù hợp nhất với người đối diện.</div>
+      <button class="next" id="dNext" type="button">Tình huống tiếp theo ›</button><div class="prog" id="dProg"></div>
+    </div>
+  </div>
+</div>
+<div class="weave" aria-hidden="true"></div>
+
+<!-- MỤC TIÊU -->
+<section class="goals" id="muc-tieu">
+  <div class="wrap">
+    <div class="head">
+      <span class="tag">Mục tiêu</span>
+      <h2>Bốn điều CHẠM hướng tới</h2>
+    </div>
+    <div class="ggrid">
+      <article class="goal"><h3>Thực hành linh hoạt, dễ tiếp cận</h3><p>Xây dựng môi trường thực hành giao tiếp để người học chủ động chọn chủ đề và luyện tập mọi lúc, mọi nơi.</p></article>
+      <article class="goal"><h3>Ngân hàng tình huống đa dạng</h3><p>Tình huống gắn với học tập, đời sống và công việc, thường xuyên cập nhật theo nhu cầu người dùng.</p></article>
+      <article class="goal"><h3>Phản xạ và diễn đạt tự nhiên</h3><p>Cải thiện phản xạ, dùng từ vựng và mức độ trang trọng phù hợp với từng hoàn cảnh giao tiếp.</p></article>
+      <article class="goal"><h3>Phản hồi và theo dõi tiến độ</h3><p>Nhận phản hồi về ngữ pháp, từ vựng, sắc thái và sự phù hợp văn hóa; theo dõi tiến độ để nhận ra điểm mạnh, hạn chế và điều chỉnh cách luyện.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- LỢI ÍCH -->
+<section id="loi-ich">
+  <div class="wrap">
+    <div class="head">
+      <span class="tag">Lợi ích</span>
+      <h2>Từ “biết” sang “dùng được”</h2>
+      <p class="lead">Nhiều người học đã có nền tảng vững nhưng vẫn khựng lại khi phải đáp lời, diễn đạt tự nhiên hay xử lí một tình huống thật. CHẠM lấp khoảng trống đó.</p>
+    </div>
+    <div class="benefits">
+      <article class="ben">
+        <h3>Với người học</h3>
+        <p>Luyện phản xạ trong môi trường an toàn, sai không ngại, sửa ngay.</p>
+        <ul><li>Nói tự nhiên hơn, bớt dịch từng chữ</li><li>Chọn cách diễn đạt hợp ngữ cảnh và đối tượng</li><li>Hiểu vì sao một câu “đúng ngữ pháp” vẫn có thể bất lịch sự</li></ul>
+      </article>
+      <article class="ben">
+        <h3>Với giao tiếp liên văn hóa</h3>
+        <p>Mỗi tình huống đi kèm ghi chú văn hóa, giúp bạn đọc được điều không nói ra.</p>
+        <ul><li>Nhận ra khác biệt về mức độ trực tiếp, khiêm tốn, lịch sự</li><li>Tránh hiểu lầm khi làm việc, học tập với người nước ngoài</li><li>Tự tin hơn khi đi trao đổi, thực tập, phỏng vấn</li></ul>
+      </article>
+      <article class="ben">
+        <h3>Với giảng viên</h3>
+        <p>Một công cụ để tổ chức hoạt động thực hành mà không mất nhiều công chuẩn bị.</p>
+        <ul><li>Dùng tình huống có sẵn hoặc tự tạo cho lớp</li><li>Theo dõi tiến bộ của từng nhóm</li><li>Mang kết quả thực hành vào buổi thảo luận</li></ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- TÍNH NĂNG -->
+<section class="features" id="tinh-nang">
+  <span class="orb a" style="opacity:.25"></span><span class="orb b" style="opacity:.2"></span>
+  <div class="wrap">
+    <div class="head">
+      <span class="tag">Tính năng</span>
+      <h2>Ba cấu phần, một vòng luyện tập</h2>
+      <p class="lead">Chọn tình huống, nhập vai hội thoại, rồi hiểu vì sao cách nói đó hiệu quả hay chưa.</p>
+    </div>
+    <div class="fgrid">
+      <article class="glass feat"><div class="ico">💬</div><h3>Ngân hàng tình huống</h3><p>Các tình huống giao tiếp thực tế để bạn chọn theo nhu cầu.</p><ul><li>Từ chối lời mời</li><li>Bày tỏ quan điểm trái chiều</li><li>Góp ý trong hoạt động nhóm</li><li>Giải quyết hiểu lầm</li></ul></article>
+      <article class="glass feat"><div class="ico">🎙️</div><h3>Thực hành hội thoại tương tác</h3><p>Nhập vai và xem cuộc hội thoại diễn ra theo lựa chọn của bạn.</p><ul><li>Nhập vai trong tình huống</li><li>Chọn cách phản hồi, theo dõi diễn biến hội thoại</li><li>Nhận đánh giá sau mỗi lượt thực hành</li><li>Xem tiến bộ qua thời gian</li></ul></article>
+      <article class="glass feat"><div class="ico">🌏</div><h3>Phân tích ngôn ngữ và văn hóa</h3><p>Hiểu điều nằm sau câu chữ để giao tiếp hiệu quả hơn.</p><ul><li>Sắc thái biểu đạt</li><li>Mức độ trang trọng</li><li>Ý nghĩa hàm ẩn</li><li>Yếu tố văn hóa ảnh hưởng đến hiệu quả giao tiếp</li></ul></article>
+    </div>
+  </div>
+</section>
+<div class="weave" aria-hidden="true"></div>
+
+<!-- CHUYỂN ĐỔI GÓC NHÌN -->
+<section class="lens" id="goc-nhin">
+  <div class="wrap">
+    <div class="head">
+      <span class="tag">Điểm sáng tạo</span>
+      <h2>Chuyển đổi góc nhìn</h2>
+      <p class="lead">Cùng một tình huống, đổi bối cảnh văn hóa để thấy cách diễn đạt, ứng xử và tiếp nhận thông điệp thay đổi ra sao.</p>
+    </div>
+    <div class="glass lens-box">
+      <p class="lscene"><b>Tình huống:</b> Đồng nghiệp mời bạn đi liên hoan cuối tuần, nhưng bạn không thể tham gia.</p>
+      <div class="tabs" role="tablist" aria-label="Phong cách giao tiếp">
+        <button class="tab" role="tab" data-k="us" aria-selected="true" type="button">Nói thẳng, rõ ràng</button>
+        <button class="tab" role="tab" data-k="uk" aria-selected="false" type="button">Nói tế nhị, giữ thể diện</button>
+        <button class="tab" role="tab" data-k="jp" aria-selected="false" type="button">Ưu tiên hòa khí, ít nói “không”</button>
+      </div>
+      <div class="lgrid" id="lGrid" aria-live="polite"></div>
+      <p class="lnote">Đây là các phong cách giao tiếp thường gặp, không gắn với một quốc gia hay cá nhân cụ thể. CHẠM dùng chúng để bạn so sánh, không để dán nhãn.</p>
+    </div>
+  </div>
+</section>
+
+<!-- GIAI ĐOẠN ĐẦU -->
+<section class="pilot" id="giai-doan-dau">
+  <div class="wrap">
+    <div class="head">
+      <span class="tag">Giai đoạn đầu</span>
+      <h2>Bắt đầu từ tiếng Anh, trình độ B1–B2</h2>
+    </div>
+    <div class="pgrid">
+      <article class="pc"><h3>Ngôn ngữ</h3><p>Thử nghiệm với tiếng Anh.</p></article>
+      <article class="pc"><h3>Người học</h3><p>Sinh viên trình độ B1–B2.</p></article>
+      <article class="pc"><h3>Sản phẩm đầu ra</h3><p>Website thực hành giao tiếp tích hợp ngân hàng tình huống, hội thoại mô phỏng và hệ thống phản hồi, đánh giá tiến bộ.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta" id="bat-dau">
+  <div class="wrap">
+    <div class="cta-box">
+      <span class="orb d" style="opacity:.3;right:-40px;left:auto;top:-60px"></span>
+      <h2 style="position:relative">Sẵn sàng để chạm tới cuộc trò chuyện thật?</h2>
+      <p style="position:relative">Để lại email, HRC sẽ gửi bạn lời mời trải nghiệm CHẠM ngay khi bản thử nghiệm mở. Ứng dụng hoàn toàn miễn phí.</p>
+      <form class="glass" id="signup" novalidate>
+        <label for="email" style="position:absolute;left:-9999px">Email của bạn</label>
+        <input id="email" type="email" placeholder="Email của bạn" autocomplete="email" required>
+        <button class="btn btn-primary" type="submit">Đăng ký trải nghiệm</button>
+      </form>
+      <div class="msg" id="msg" role="status"></div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" style="padding-top:0">
+  <div class="wrap">
+    <div class="head">
+      <span class="tag">Câu hỏi thường gặp</span>
+      <h2>Bạn có thể đang thắc mắc</h2>
+    </div>
+    <div class="faq-list">
+      <details><summary>CHẠM dành cho ai?</summary><p>Trước hết là sinh viên ngành Ngôn ngữ Anh tại ULIS. Học sinh, sinh viên các trường khác và bất kì ai muốn cải thiện giao tiếp tiếng Anh đều có thể dùng. Giảng viên cũng có thể dùng CHẠM để tổ chức hoạt động thực hành trên lớp.</p></details>
+      <details><summary>Mình có thể luyện CHẠM lúc nào, ở đâu?</summary><p>Bất cứ lúc nào bạn muốn. Bạn tự chọn chủ đề cần luyện và thực hành trên điện thoại hoặc máy tính, không cần đặt lịch hay chờ lớp học.</p></details>
+      <details><summary>CHẠM khác gì các ứng dụng học từ vựng, ngữ pháp?</summary><p>Thay vì học từng mảnh kiến thức, CHẠM đặt bạn vào tình huống cụ thể và yêu cầu chọn cách nói phù hợp với ngữ cảnh, đối tượng và đặc điểm văn hóa, rồi giải thích vì sao lựa chọn đó hiệu quả hoặc chưa.</p></details>
+      <details><summary>“Giao tiếp liên văn hóa” nghĩa là gì?</summary><p>Là khả năng giao tiếp hiệu quả và tôn trọng với người đến từ nền văn hóa khác: biết cách khen, từ chối, đề nghị, góp ý sao cho đúng sắc thái, không chỉ đúng ngữ pháp.</p></details>
+      <details><summary>“Chuyển đổi góc nhìn” là gì?</summary><p>Là tính năng cho phép bạn xem cùng một tình huống trong những bối cảnh văn hóa khác nhau, từ đó nhận ra khác biệt về cách diễn đạt, ứng xử và cách người nghe tiếp nhận thông điệp.</p></details>
+      <details><summary>Giảng viên có thể dùng như thế nào?</summary><p>Giảng viên có thể chọn tình huống có sẵn hoặc soạn tình huống riêng, giao cho cả lớp thực hành, rồi dùng kết quả để thảo luận trực tiếp trong buổi học.</p></details>
+      <details><summary>CHẠM có mất phí không?</summary><p>Không. CHẠM miễn phí cho người học. Dự án đang được câu lạc bộ HRC xây dựng, hãy đăng ký email phía trên để nhận thông báo khi mở thử nghiệm.</p></details>
+    </div>
+  </div>
+</section>
+</main>
+
+<div class="weave" aria-hidden="true"></div>
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div>
+        <div class="logo"><img class="mark" src="data:image/png;base64,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" alt="Logo HRC">CHẠM</div>
+        <p>Nền tảng thực hành giao tiếp liên văn hóa<br>dành cho sinh viên Trường Đại học Ngoại ngữ – ĐHQGHN.</p>
+      </div>
+      <div>
+        <p>Phát triển bởi câu lạc bộ HRC</p>
+        <p><a href="#loi-ich">Lợi ích</a> · <a href="#tinh-nang">Tính năng</a> · <a href="#faq">FAQ</a></p>
+      </div>
+    </div>
+    <small>© 2026 CHẠM – HRC, Trường Đại học Ngoại ngữ, ĐHQGHN.</small>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var h=document.querySelector('header');
+  function onScroll(){h.classList.toggle('solid',window.scrollY>30)}
+  onScroll();window.addEventListener('scroll',onScroll,{passive:true});
+
+  var CAT={hoc:'Học tập',doi:'Đời sống',viec:'Công việc'};
+  var LV={good:'Rất phù hợp',ok:'Dùng được, chưa tối ưu',bad:'Chưa phù hợp'};
+  // Mỗi lựa chọn: [câu trả lời, mức độ, khía cạnh, nhận xét]
+  var S=[
+   {c:'viec',ctx:'Công sở',scene:'Bạn vừa thuyết trình xong trước đối tác nước ngoài.',line:'“That was a brilliant presentation.”',who:'Đối tác – David',o:[
+    ['No, no, it was really not good.','bad','Văn hóa','Phủ nhận lời khen quá khiêm tốn có thể bị hiểu là bạn không đồng ý với họ.'],
+    ['Thank you! I’m glad it was useful.','good','Sắc thái','Nhận lời khen gọn gàng và ghi nhận người nói, rất tự nhiên trong giao tiếp tiếng Anh.'],
+    ['Yes, I know.','bad','Sắc thái','Nghe như tự mãn. Đúng ngữ pháp nhưng lệch sắc thái.']]},
+   {c:'doi',ctx:'Kết bạn',scene:'Bạn cùng lớp trao đổi mời bạn đi ăn tối nhưng bạn đã có hẹn.',line:'“We’re going for dinner tonight. Want to join us?”',who:'Bạn cùng lớp – Emma',o:[
+    ['I can’t. I’m busy.','ok','Mức độ lịch sự','Rõ ràng nhưng hơi cụt, người mời có thể thấy bị từ chối thẳng.'],
+    ['Thanks for asking! I’ve got plans tonight, but I’d love to join next time.','good','Văn hóa','Cảm ơn, nêu lí do ngắn rồi mở ra cơ hội khác: mô hình từ chối lịch sự rất hữu ích.'],
+    ['Maybe.','bad','Diễn đạt','Mơ hồ khiến người mời không biết bạn có đến hay không.']]},
+   {c:'hoc',ctx:'Học tập',scene:'Bạn cần gia hạn nộp bài với giảng viên nước ngoài.',line:'“Do you have something you’d like to discuss?”',who:'Giảng viên – Prof. Miller',o:[
+    ['Give me more time for the assignment.','bad','Mức độ trang trọng','Nghe như mệnh lệnh. Với giảng viên, hãy diễn đạt thành đề nghị.'],
+    ['I was wondering if it would be possible to have a short extension, as I’ve been unwell this week.','good','Ngữ pháp, từ vựng','Cấu trúc đề nghị lịch sự và lí do rõ ràng, phù hợp quan hệ giảng viên – sinh viên.'],
+    ['I can’t finish it.','ok','Diễn đạt','Nêu được vấn đề nhưng chưa có đề nghị cụ thể.']]},
+   {c:'hoc',ctx:'Làm việc nhóm',scene:'Bạn cùng nhóm chưa gửi phần việc của mình.',line:'“Hey, how’s the group project going?”',who:'Bạn cùng nhóm – Jake',o:[
+    ['Honestly, we’re behind because of you.','bad','Sắc thái','Quy lỗi trực tiếp dễ gây căng thẳng trong nhóm.'],
+    ['We’re making progress! Could you send me your part by Friday so we can merge everything?','good','Từ vựng','Giữ thiện chí, nêu rõ việc cần làm và hạn chót.'],
+    ['Fine. Whatever.','bad','Mức độ lịch sự','Thái độ thờ ơ, không giải quyết được vấn đề.']]},
+   {c:'hoc',ctx:'Trên lớp',scene:'Giảng viên vừa giải thích yêu cầu bài tập nhưng bạn chưa chắc đã hiểu.',line:'“Any questions before we move on?”',who:'Giảng viên – Dr. Evans',o:[
+    ['No.','bad','Diễn đạt','Bỏ lỡ cơ hội làm rõ và cũng ít tạo tương tác với giảng viên.'],
+    ['Could you clarify the second requirement? I’m not sure I’ve understood it correctly.','good','Ngữ pháp, từ vựng','Dùng “clarify” và cách nói giảm nhẹ “I’m not sure I’ve understood”, rất tự nhiên.'],
+    ['I don’t understand anything.','ok','Sắc thái','Trung thực nhưng quá chung, giảng viên khó biết bạn cần giúp ở đâu.']]},
+   {c:'doi',ctx:'Quán cà phê',scene:'Bạn gọi đồ uống ở quán cà phê.',line:'“Hi there! What can I get for you?”',who:'Nhân viên quán',o:[
+    ['I want latte.','bad','Ngữ pháp','Thiếu mạo từ và nghe thiếu lịch sự khi gọi món.'],
+    ['Give me a coffee.','ok','Mức độ lịch sự','Hiểu được nhưng hơi ra lệnh.'],
+    ['Could I have a medium latte, please?','good','Mức độ trang trọng','Chuẩn mực khi gọi món: “Could I have…” kèm “please”.']]},
+   {c:'doi',ctx:'Đi du lịch',scene:'Bạn đang loay hoay tìm ga tàu ở nước ngoài.',line:'“Hi, you look a little lost. Can I help?”',who:'Người qua đường',o:[
+    ['No, I’m fine.','bad','Diễn đạt','Bỏ lỡ lời giúp đỡ trong khi bạn đang cần.'],
+    ['Where is the station?','ok','Mức độ lịch sự','Đủ ý nhưng hơi cộc, thiếu lời cảm ơn mở đầu.'],
+    ['Thanks so much! Could you tell me how to get to the train station?','good','Từ vựng','Cảm ơn trước, rồi dùng câu hỏi gián tiếp lịch sự.']]},
+   {c:'viec',ctx:'Phỏng vấn',scene:'Bạn đang phỏng vấn thực tập cho công ty quốc tế.',line:'“Tell me a little about yourself.”',who:'Nhà tuyển dụng – Ms. Carter',o:[
+    ['I’m 21 years old, I like music, and I have two siblings.','ok','Sắc thái','Thông tin cá nhân nhưng chưa liên quan tới vị trí ứng tuyển.'],
+    ['I’m a final-year English student, and I’ve led two volunteer projects that strengthened my teamwork and communication.','good','Từ vựng','Súc tích, nêu đúng năng lực nhà tuyển dụng quan tâm.'],
+    ['Nothing special.','bad','Diễn đạt','Tự hạ thấp bản thân, mất cơ hội gây ấn tượng.']]},
+   {c:'viec',ctx:'Họp nhóm',scene:'Đồng nghiệp đề xuất phương án mà bạn thấy chưa ổn.',line:'“I think we should launch next week.”',who:'Đồng nghiệp – Alex',o:[
+    ['That’s wrong.','bad','Sắc thái','Phản bác trực diện quá mức, dễ làm đối phương phòng thủ.'],
+    ['I see your point. My concern is that we may not have enough time to test. Could we consider launching the week after?','good','Văn hóa','Ghi nhận ý kiến, nêu lo ngại rồi đề xuất thay thế.'],
+    ['Okay.','ok','Diễn đạt','Tránh xung đột nhưng bạn không nêu được mối lo của mình.']]}
+   ,{c:'viec',ctx:'Giải quyết hiểu lầm',scene:'Bạn và đồng nghiệp nhầm giờ họp, họ đã chờ bạn cả tiếng.',line:'“You said 3 p.m., didn’t you? I waited an hour.”',who:'Đồng nghiệp – Sam',o:[
+    ['It’s not my fault.','bad','Sắc thái','Đẩy trách nhiệm khiến hiểu lầm trở thành tranh cãi.'],
+    ['I’m sorry about the mix-up. I may not have been clear. Next time, I’ll confirm the time in writing.','good','Từ vựng','Xin lỗi, nhận phần mình có thể đã chưa rõ và đưa ra cách khắc phục.'],
+    ['Sorry.','ok','Diễn đạt','Lịch sự nhưng chưa giải quyết nguyên nhân hay cách tránh lặp lại.']]}
+  ];
+  var cat='all',L=[],i=0,done=false,st={hoc:[0,0],doi:[0,0],viec:[0,0]};
+  var $=function(id){return document.getElementById(id)};
+
+  function prog(){
+    var html='',best=null,worst=null,tot=0;
+    Object.keys(CAT).forEach(function(k){
+      var n=st[k][0],g=st[k][1],p=n?Math.round(g/n*100):0;tot+=n;
+      html+='<div class="pr"><span>'+CAT[k]+'</span><i><u style="width:'+p+'%"></u></i><em>'+g+'/'+n+'</em></div>';
+      if(n){if(!best||p>best.p)best={k:k,p:p};if(!worst||p<worst.p)worst={k:k,p:p}}
+    });
+    var note;
+    if(tot<3)note='Luyện thêm vài tình huống để thấy điểm mạnh và hạn chế của bạn.';
+    else if(best.k===worst.k||best.p===worst.p)note='Bạn đang đều tay ở các chủ đề đã luyện. Thử thêm chủ đề khác để so sánh.';
+    else note='Mạnh ở: '+CAT[best.k]+'. Cần luyện thêm: '+CAT[worst.k]+'.';
+    $('dProg').innerHTML=html+'<p>'+note+'</p>';
+  }
+  function render(){
+    var s=L[i];done=false;
+    $('dTag').textContent='Tình huống '+(i+1)+'/'+L.length;
+    $('dCtx').textContent=s.ctx;$('dScene').textContent=s.scene;
+    $('dLine').textContent=s.line;$('dWho').textContent=s.who;
+    $('dFb').textContent='Chọn cách đáp lại phù hợp nhất với người đối diện.';
+    var box=$('dOpts');box.innerHTML='';
+    s.o.forEach(function(o){
+      var b=document.createElement('button');b.type='button';b.className='opt';b.textContent=o[0];
+      b.addEventListener('click',function(){
+        [].forEach.call(box.children,function(c){c.disabled=true});
+        b.classList.add(o[1]);
+        if(!done){done=true;st[s.c][0]++;if(o[1]==='good')st[s.c][1]++;prog()}
+        var fb=$('dFb');fb.innerHTML='';
+        var t=document.createElement('b');t.textContent=LV[o[1]]+' · '+o[2]+'. ';
+        fb.appendChild(t);fb.appendChild(document.createTextNode(o[3]));
+      });
+      box.appendChild(b);
+    });
+  }
+  function pick(c){
+    cat=c;i=0;
+    L=S.filter(function(s){return c==='all'||s.c===c});
+    [].forEach.call(document.querySelectorAll('.fchip'),function(b){b.setAttribute('aria-pressed',b.dataset.c===c)});
+    render();
+  }
+  [].forEach.call(document.querySelectorAll('.fchip'),function(b){b.addEventListener('click',function(){pick(b.dataset.c)})});
+  $('dNext').addEventListener('click',function(){i=(i+1)%L.length;render()});
+  pick('all');prog();
+
+  $('signup').addEventListener('submit',function(e){
+    e.preventDefault();
+    var v=$('email').value.trim(),m=$('msg');
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)){m.textContent='Email chưa hợp lệ. Hãy kiểm tra lại, ví dụ: ten@email.com.';return}
+    m.textContent='Cảm ơn bạn! HRC sẽ gửi lời mời trải nghiệm CHẠM tới '+v+'.';
+    $('email').value='';
+  });
+})();
+</script>
+<script>
+(function(){
+  var D={
+   us:['“Thanks for the invite, but I can’t make it. Have fun!”','Lời từ chối rõ ràng, không cần giải thích dài. Người nghe thường xem đây là bình thường.','Bạn thẳng thắn và tôn trọng thời gian của cả hai.'],
+   uk:['“I’d love to, but I’m afraid I’ve already got something on.”','Nghe lịch sự và giữ thể diện cho người mời. “I’m afraid” làm câu từ chối nhẹ hơn.','“I’d love to, but…” thường là từ chối thật, không phải hẹn lại.'],
+   jp:['“That sounds nice, but it may be a little difficult.”','Người nghe thường hiểu “difficult” là không thể và không hỏi thêm.','Tránh chữ “no” để giữ hòa khí; nói thẳng có thể bị thấy hơi cộc.']
+  };
+  var H=['Cách diễn đạt','Người nghe tiếp nhận','Ý hàm ẩn'];
+  var g=document.getElementById('lGrid'),tabs=document.querySelectorAll('.tab');
+  function show(k){
+    g.innerHTML='';
+    D[k].forEach(function(s,j){
+      var c=document.createElement('div');c.className='lc';
+      var h=document.createElement('h3');h.textContent=H[j];
+      var p=document.createElement('p');p.textContent=s;
+      c.appendChild(h);c.appendChild(p);g.appendChild(c);
+    });
+    [].forEach.call(tabs,function(b){b.setAttribute('aria-selected',b.dataset.k===k)});
+  }
+  [].forEach.call(tabs,function(b){b.addEventListener('click',function(){show(b.dataset.k)})});
+  show('us');
+})();
+</script>
+</body>
+</html>
